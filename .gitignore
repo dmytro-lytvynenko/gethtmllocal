@@ -1,0 +1,11 @@
+*.pdf
+converter
+.vscode
+build
+builds
+*.html
+html2pdf
+project
+Prototyping/node_modules
+Prototyping/package.json
+Prototyping/package-lock.json

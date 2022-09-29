@@ -1,0 +1,35 @@
+image: gcc
+
+before_script:
+  - |
+    if [ ! -d ../googletest ]; then
+      CWD=`pwd`
+      cd ..
+      git clone https://github.com/google/googletest
+      cd $CWD
+    fi
+  - |
+    apt update
+    apt-get install -y bash
+    apt-get install -y cmake
+    apt-get install -y curl
+    apt-get install -y libcurl4-openssl-dev
+    apt-get install -y cppcheck
+  - |
+    cppcheck --version
+
+stages:          # List of stages for jobs, and their order of execution
+  - build
+  - static-code-analysis
+
+build:
+  stage: build
+
+  script:
+    - ./build_script.sh
+
+static-code-analysis:
+  stage: static-code-analysis
+
+  script:
+    - cppcheck src/ --verbose --enable=all --error-exitcode=1
